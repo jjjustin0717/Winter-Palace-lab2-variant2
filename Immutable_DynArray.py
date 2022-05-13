@@ -31,7 +31,7 @@ class DynArray:
         self._growth_factor = growth_factor
 
         for value in lst:
-            self.add(value)
+            self.append(value)
 
     def __eq__(self, other):
         """ equal function """
@@ -48,18 +48,26 @@ class DynArray:
         """ for str() implementation """
         dy_array = copy.deepcopy(self)
         for i in range(self._size):
-            dy_array.add(str(self._array[i]))
+            dy_array.append(str(self._array[i]))
         return dy_array
+
+    def size(self):
+        """ return size """
+        return self._size
+
+    def capacity(self):
+        """ return capacity """
+        return self._capacity
 
     def resize(self, new_capacity: int):
         """ resize the array """
         re_array = DynArray(ini_capacity=new_capacity, growth_factor=self._growth_factor)
         for k in range(self._size):
-            re_array.add(self._array[k])
+            re_array.append(self._array[k])
         self._array = re_array._array
         self._capacity = new_capacity
 
-    def add(self, value: Any):
+    def append(self, value: Any):
         """ add element to the end(No matter data types) """
         if self._size == self._capacity:
             # This is a commonly used scaling rule x = x*2
@@ -73,165 +81,139 @@ class DynArray:
             print('invalid index')
         return self._array[index]
 
-    # @property is used to decoration get_size method
-    @property
-    def size(self):
-        """ return array size """
-        return self._size
+    """
+        It seems we should not access a protected member of class.
+        but what i saw in the given pdf you give an example like this:
+        class Node(object):
+            def __init__(self, value, next)
+            self._value = value
+            xxx
+        def head(n):
+            assert type(n) is Node
+            return n._value
+        i just copy the code in pdf and test it in pycharm.
+        the pycharm warn me that Access to a protected member _value of a class
+    """
 
-    @property
-    def capacity(self):
-        """ return the capacity of array """
-        return self._capacity
+    def set_item(self, index: int, value: Any):
+        """ Set an element with specific index / key """
+        dy_array = copy.deepcopy(self)
+        if not 0 < index + 1 <= array.size:
+            print('index is out of line')
+        dy_array.array[index] = value
+        return dy_array
 
+    def remove(self, value: Any):
+        """ Remove an element (key, index, or value) """
+        dy_array = copy.deepcopy(self)
+        for i in range(dy_array.size):
+            if dy_array.array[i] == value:
+                # Forward covering value
+                for j in range(i, dy_array.size - 1):
+                    dy_array.array[j] = dy_array.array[j + 1]
+                # The default value changes to None
+                dy_array.array[dy_array.size - 1] = None
+                dy_array.size -= 1
+                return dy_array
+        raise ValueError('value not found')
 
-"""
-    It seems we should not access a protected member of class.
-    but what i saw in the given pdf you give an example like this:
-    class Node(object):
-        def __init__(self, value, next)
-        self._value = value
-        xxx
-    def head(n):
-        assert type(n) is Node
-        return n._value
-    i just copy the code in pdf and test it in pycharm.
-    the pycharm warn me that Access to a protected member _value of a class
-"""
+    def is_member(self, value):
+        """ Is member """
+        dy_array = copy.deepcopy(self)
+        for i in range(dy_array.size):
+            if dy_array.array[i] == value:
+                return True
+        return False
 
+    def reduce(self, f, initial_state):
+        """ Reduce process elements and build a value by the function """
+        state = initial_state
+        for i in range(self.size):
+            state = f(state, self.array[i])
+        return state
 
-def set_item(array, index: int, value: Any):
-    """ Set an element with specific index / key """
-    dy_array = copy.deepcopy(array)
-    if not 0 < index + 1 <= array.size:
-        print('index is out of line')
-    dy_array.array[index] = value
-    return dy_array
+    # def reset_growth_factor(array, growth_factor: int):
+    #     """ reset growth factor(The initial value is 2 and take cumulative multiplication form) """
+    #     assert type(array) is DynArray
+    #     dy_array = copy.deepcopy(array)
+    #     # Here we use deepcopy to return a new object. so it's a immutable way.
+    #     dy_array.growth_factor = growth_factor
+    #     return dy_array
 
+    # def insert(array, index: int, value: Any):
+    #     """ add element at given position """
+    #     dy_array = copy.deepcopy(array)
+    #     # Check if index is out of line
+    #     if not 0 < index + 1 <= array.size:
+    #         print('index is out of line')
+    #     if dy_array.size + 1 > dy_array.capacity:
+    #         dy_array.resize(dy_array.growth_factor * dy_array.capacity)
+    #     # Reshape the array move index+1's element to index+2
+    #     for i in range(dy_array.size - 1, index - 1, -1):
+    #         dy_array.array[i + 1] = dy_array.array[i]
+    #     dy_array.array[index] = value
+    #     dy_array.size += 1
+    #     return dy_array
 
-def remove(array, value: Any):
-    """ Remove an element (key, index, or value) """
-    dy_array = copy.deepcopy(array)
-    for i in range(dy_array.size):
-        if dy_array.array[i] == value:
-            # Forward covering value
-            for j in range(i, dy_array.size - 1):
-                dy_array.array[j] = dy_array.array[j + 1]
-            # The default value changes to None
-            dy_array.array[dy_array.size - 1] = None
-            dy_array.size -= 1
-            return dy_array
-    raise ValueError('value not found')
+    def to_list(self) -> List:
+        """ To built-in list """
+        arr_list = []
+        if self.size > 0:
+            for i in range(self.size):
+                arr_list.append(self.array[i])
+        return arr_list
 
+    def from_list(self, lst: List):
+        """ From built-in list """
+        dy_array = copy.deepcopy(self)
+        for value in lst:
+            dy_array.append(value)
+        return dy_array
 
-def is_member(array, value):
-    """ Is member """
-    dy_array = copy.deepcopy(array)
-    for i in range(dy_array.size):
-        if dy_array.array[i] == value:
-            return True
-    return False
+    # def find(array, f) -> int:
+    #     """ Find the first element that meets this requirement and return index """
+    #     for i in range(array.size):
+    #         if f(array.array[i]):
+    #             return i
+    #     return -1
 
+    def filter(self, f) -> List:
+        """Filter data structure by specific predicate"""
+        dy_array = []
+        for i in range(self.size):
+            if f(self.array[i]):
+                dy_array.append(self.array[i])
+        return dy_array
 
-def reduce(array, f, initial_state):
-    """ Reduce process elements and build a value by the function """
-    state = initial_state
-    for i in range(array.size):
-        state = f(state, array.array[i])
-    return state
+    def map(self, f):
+        """ Map structure by specific function """
+        dy_array = copy.deepcopy(self)
+        for i in range(dy_array.size):
+            dy_array.array[i] = f(dy_array.array[i])
+        return dy_array
 
+    # def concatenate(array, dynamic_array):
+    #     """ concatenate two array """
+    #     lst = dynamic_array.to_list()
+    #     dy_array = copy.deepcopy(array)
+    #     if dynamic_array.size() > 0:
+    #         for i in range(len(lst)):
+    #             dy_array.append(lst[i])
+    #     return dy_array
 
-# def reset_growth_factor(array, growth_factor: int):
-#     """ reset growth factor(The initial value is 2 and take cumulative multiplication form) """
-#     assert type(array) is DynArray
-#     dy_array = copy.deepcopy(array)
-#     # Here we use deepcopy to return a new object. so it's a immutable way.
-#     dy_array.growth_factor = growth_factor
-#     return dy_array
+    def empty(self):
+        return None
 
-
-# def insert(array, index: int, value: Any):
-#     """ add element at given position """
-#     dy_array = copy.deepcopy(array)
-#     # Check if index is out of line
-#     if not 0 < index + 1 <= array.size:
-#         print('index is out of line')
-#     if dy_array.size + 1 > dy_array.capacity:
-#         dy_array.resize(dy_array.growth_factor * dy_array.capacity)
-#     # Reshape the array move index+1's element to index+2
-#     for i in range(dy_array.size - 1, index - 1, -1):
-#         dy_array.array[i + 1] = dy_array.array[i]
-#     dy_array.array[index] = value
-#     dy_array.size += 1
-#     return dy_array
-
-
-def to_list(array) -> List:
-    """ To built-in list """
-    arr_list = []
-    if array.size > 0:
-        for i in range(array.size):
-            arr_list.append(array.array[i])
-    return arr_list
-
-
-def from_list(array, lst: List):
-    """ From built-in list """
-    dy_array = copy.deepcopy(array)
-    for value in lst:
-        dy_array.append(value)
-    return dy_array
-
-
-# def find(array, f) -> int:
-#     """ Find the first element that meets this requirement and return index """
-#     for i in range(array.size):
-#         if f(array.array[i]):
-#             return i
-#     return -1
-
-
-def filter(array, f) -> List:
-    """Filter data structure by specific predicate"""
-    dy_array = []
-    for i in range(array.size):
-        if f(array.array[i]):
-            dy_array.append(array.array[i])
-    return dy_array
-
-
-def map(array, f):
-    """ Map structure by specific function """
-    dy_array = copy.deepcopy(array)
-    for i in range(dy_array.size):
-        dy_array.array[i] = f(dy_array.array[i])
-    return dy_array
+    def __iter__(self):
+        """ iteration """
+        return array
 
 
-# def concatenate(array, dynamic_array):
-#     """ concatenate two array """
-#     lst = dynamic_array.to_list()
-#     dy_array = copy.deepcopy(array)
-#     if dynamic_array.size() > 0:
-#         for i in range(len(lst)):
-#             dy_array.append(lst[i])
-#     return dy_array
-
-
-def empty():
-    return None
-
-
-def __iter__(array):
-    """ iteration """
-    return array
-
-
-def __next__(array):
-    """ iteration, get next element """
-    if array.start <= array.size - 1:
-        res = array.array[array.start]
-        array.start += 1
-        return res
-    else:
-        raise StopIteration
+    def __next__(self):
+        """ iteration, get next element """
+        if self.start <= self.size - 1:
+            res = self.array[self.start]
+            self.start += 1
+            return res
+        else:
+            raise StopIteration
