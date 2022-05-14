@@ -47,13 +47,36 @@ Group members information as follows.
 
 ## Changelog
 
-- 14.05.2022 - 2
-  1.Fix some problems.
-- 13.05.2022 - 1
-  1.Reconstruct the main function of Lab2.
-- 12.05.2022 - 0
-  1.Complete the main function of Lab2.
-  2.Raise some problems of Lab2.
+---
+
+The second lab of CPO
+HDU-ID: 212320025
+Name: Zuo Yuexin
+Date: 2022/05/14
+
+1.Fix some problems.
+
+---
+
+The second lab of CPO
+HDU-ID: 212320025
+Name: Zuo Yuexin
+Date: 2022/05/13
+
+1.Reconstruct the main function of Lab2.
+
+
+---
+
+The second lab of CPO
+HDU-ID: 212320025
+Name: Zuo Yuexin
+Date: 2022/05/12
+
+1.Complete the main function of Lab2.
+
+2.Raise some problems of Lab2.
+
 
 ## Design notes
 
@@ -68,4 +91,5 @@ but what i saw in the given pdf you give an example like this:
       return n._value
 i just copy the code in pdf and test it in pycharm.
 the pycharm warn me that Access to a protected member _value of a class.
+more detail description is showed in Immutable_DynArray.py.
 
