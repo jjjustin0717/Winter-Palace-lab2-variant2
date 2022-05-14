@@ -22,7 +22,7 @@ class DynArray:
         3. Add a new element to the new chunk.
     """
 
-    def __init__(self, lst=None,
+    def __init__(self, lst=None,  # type: ignore
                  init_capacity: int = 5, growth_factor: int = 2):
         """ Initialize the array """
         if lst is None:
@@ -37,7 +37,7 @@ class DynArray:
         for value in lst:
             self._append(value)
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: Any) -> bool:
         """ Equal function """
         if other is None:
             return False
@@ -112,7 +112,7 @@ class DynArray:
             print('invalid index')
         return self._array[index]
 
-    def set_item(self, index: int, value: Any):
+    def set_item(self, index: int, value: Any) -> 'DynArray':
         """ Set an element with specific index / key """
         dy_array = copy.deepcopy(self)
         if not 0 < index + 1 <= dy_array._size:
@@ -134,7 +134,7 @@ class DynArray:
                 return dy_array
         raise ValueError('value not found')
 
-    def is_member(self, value) -> bool:
+    def is_member(self, value: Any) -> bool:
         """ Is member of Dynamic array"""
         dy_array = copy.deepcopy(self)
         for i in range(dy_array.size()):
@@ -150,14 +150,14 @@ class DynArray:
                 arr_list.append(self._array[i])
         return arr_list
 
-    def from_list(self, lst: List) -> 'DynArray':
+    def from_list(self, lst: List[Any]) -> 'DynArray':
         """ From built-in list """
         dy_array = copy.deepcopy(self)
         for value in lst:
             dy_array._append(value)
         return dy_array
 
-    def filter(self, f: Callable) -> List[Any]:
+    def filter(self, f: Callable[..., Any]) -> List[Any]:
         """ Filter data structure by specific predicate """
         lst = []  # type: List[Any]
         for i in range(self.size()):
@@ -165,21 +165,21 @@ class DynArray:
                 lst.append(self._array[i])
         return lst
 
-    def map(self, f: Callable) -> 'DynArray':
+    def map(self, f: Callable[..., Any]) -> 'DynArray':
         """ Map structure by specific function """
         dy_array = copy.deepcopy(self)
         for i in range(dy_array.size()):
             dy_array._array[i] = f(dy_array._array[i])
         return dy_array
 
-    def reduce(self, f, initial_state) -> Any:
+    def reduce(self, f: Callable[..., Any], initial_state: Any) -> Any:
         """ Reduce process elements and build a value by the function """
         state = initial_state
         for i in range(self._size):
             state = f(state, self._array[i])
         return state
 
-    def concatenate(self, array) -> 'DynArray':
+    def concatenate(self, array: "DynArray") -> 'DynArray':
         """ Concatenate the two Dynamic arrays """
         lst = array.to_list()
         array_copy = copy.deepcopy(self)
@@ -192,11 +192,11 @@ class DynArray:
         """ Empty Dynamic array """
         return None
 
-    def __iter__(self):
+    def __iter__(self) -> Any:
         """ Iteration """
         return self
 
-    def __next__(self):
+    def __next__(self) -> Any:
         """ Iterator, get next element """
         if self._start <= self._size - 1:
             res = self._array[self._start]
