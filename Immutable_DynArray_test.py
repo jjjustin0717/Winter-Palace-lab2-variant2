@@ -56,12 +56,14 @@ class TestImmutableDynArray(unittest.TestCase):
 
         def f1(n):
             return n is not None
+
         self.assertEqual(l1.filter(f1), [1])
 
         def f2(n):
             if n is None:
                 return 'None'
             return n * 2
+
         self.assertEqual(l1.map(f2).to_list(), ['None', 2])
         self.assertEqual(empty.reduce(lambda st, e: st + e, 0), 0)
         self.assertIsNone(array1.empty(), None)
@@ -214,3 +216,7 @@ class TestImmutableDynArray(unittest.TestCase):
         self.assertEqual(array.to_list(), tmp)
         i = iter(DynArray())
         self.assertRaises(StopIteration, lambda: next(i))
+
+
+if __name__ == '__main__':
+    unittest.main()
