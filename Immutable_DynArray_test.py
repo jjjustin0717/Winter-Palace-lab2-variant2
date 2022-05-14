@@ -41,7 +41,8 @@ class TestImmutableDynArray(unittest.TestCase):
         self.assertFalse(l2.is_member(2))
         self.assertEqual(l1.to_list(), [None, 1])
         self.assertEqual(l1, empty.from_list([None, 1]))
-        self.assertEqual(l1.concatenate(l2), empty.from_list([None, 1, 1, None]))
+        self.assertEqual(l1.concatenate(l2),
+                         empty.from_list([None, 1, 1, None]))
         buf = []
         for e in l1:
             buf.append(e)
