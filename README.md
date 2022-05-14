@@ -47,14 +47,25 @@ Group members information as follows.
 
 ## Changelog
 
-- 29.03.2022 - 2
-  Add test coverage.
-- 29.03.2022 - 1
-  Update README. Add formal sections.
-- 29.03.2022 - 0
-  Initial
+- 14.05.2022 - 2
+  1.Fix some problems.
+- 13.05.2022 - 1
+  1.Reconstruct the main function of Lab2.
+- 12.05.2022 - 0
+  1.Complete the main function of Lab2.
+  2.Raise some problems of Lab2.
 
 ## Design notes
 
-- ...
+- It seems we should not access a protected member of class.
+but what i saw in the given pdf you give an example like this:
+  class Node(object):
+    def __init__(self, value, next)
+      self._value = value
+      xxx
+    def head(n):
+      assert type(n) is Node
+      return n._value
+i just copy the code in pdf and test it in pycharm.
+the pycharm warn me that Access to a protected member _value of a class.
 
