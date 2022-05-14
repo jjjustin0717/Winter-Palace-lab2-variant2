@@ -47,6 +47,24 @@ Group members information as follows.
 
 ## Changelog
 
+The second lab of CPO
+HDU-ID: 212320024
+Name: Chen Chongzhong
+Date: 2022/05/14
+
+1.Add the API test.
+
+---
+
+The second lab of CPO
+HDU-ID: 212320024
+Name: Chen Chongzhong
+Date: 2022/05/13
+
+1.Complete the unittest and PBT tests for Immutable Algorithms.
+
+2.Fix some problems in Immutable Algorithms.
+
 ---
 
 The second lab of CPO
@@ -87,7 +105,7 @@ but what i saw in the given pdf you give an example like this:
     def head(n):
       assert type(n) is Node
       return n._value
-i just copy the code in pdf and test it in pycharm.
+I just copy the code in pdf and test it in PyCharm.
 the pycharm warn me that Access to a protected member _value of a class.
-more detail description is showed in Immutable_DynArray.py.
+More detail description is showed in `Immutable_DynArray.py`.
 
