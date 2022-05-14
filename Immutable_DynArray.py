@@ -5,12 +5,15 @@ from typing import Any, Callable, List
 class DynArray:
     """
     • You can use the built-in list inside node with a fixed size
-    • You need to check that your implementation correctly works with None value
-    • You need to implement functions/methods for getting/setting value by index
+    • You need to check that your implementation correctly works
+      with None value
+    • You need to implement functions/methods for getting/setting
+      value by index
     • A user should specify growing factor
 
-    1. You have a chunk of memory. The chunk has a capacity (how many elements
-    it can contain) and length (how many elements it contains right now).
+    1. You have a chunk of memory. The chunk has a capacity
+    (how many elements it can contain) and length
+    (how many elements it contains right now).
     2. You need to add a new element, but capacity == length. You don’t have space
     for a new element.What will we need to do?
     1. Allocate a new chunk of memory (in Python, usually, it looks like
@@ -19,7 +22,8 @@ class DynArray:
     3. Add a new element to the new chunk.
     """
 
-    def __init__(self, lst=None, init_capacity: int = 5, growth_factor: int = 2):
+    def __init__(self, lst=None,
+                 init_capacity: int = 5, growth_factor: int = 2):
         """ Initialize the array """
         if lst is None:
             lst = []
@@ -61,7 +65,8 @@ class DynArray:
 
     def resize(self, new_capacity: int) -> None:
         """ Resize the Dynamic array """
-        re_array = DynArray(init_capacity=new_capacity, growth_factor=self._growth_factor)
+        re_array = DynArray(init_capacity=new_capacity,
+                            growth_factor=self._growth_factor)
         for k in range(self._size):
             re_array._append(self._array[k])
         self._array = re_array._array
