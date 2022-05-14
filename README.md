@@ -65,7 +65,6 @@ Date: 2022/05/13
 
 1.Reconstruct the main function of Lab2.
 
-
 ---
 
 The second lab of CPO
@@ -76,7 +75,6 @@ Date: 2022/05/12
 1.Complete the main function of Lab2.
 
 2.Raise some problems of Lab2.
-
 
 ## Design notes
 
