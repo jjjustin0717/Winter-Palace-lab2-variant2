@@ -12,22 +12,22 @@ Objectives:
 
 Variant 2:  Dynamic array
 
-- You can use the built-in list inside node with a fixed size
-- You need to check that your implementation correctly works
+1.You can use the built-in list inside node with a fixed size
+2.You need to check that your implementation correctly works
 with None value
-- You need to implement functions/methods for getting/setting
+3.You need to implement functions/methods for getting/setting
 value by index
-- A user should specify growing factor
+4.A user should specify growing factor
 
-1. You have a chunk of memory. The chunk has a capacity
+1.You have a chunk of memory. The chunk has a capacity
 (how many elements it can contain) and length
 (how many elements it contains right now).
-2. You need to add a new element, but capacity == length.
-   You don’t have space for a new element. What will we need to do?
-    1. Allocate a new chunk of memory (in Python, usually,
-    it looks like [None]*(capacity *growth_factor))
-    2. Copy data from the old chunk to the new chunk
-    3. Add a new element to the new chunk.
+2.You need to add a new element, but capacity == length.
+  You don’t have space for a new element. What will we need to do?
+  1.Allocate a new chunk of memory (in Python, usually,
+  it looks like [None]*(capacity *growth_factor))
+  2.Copy data from the old chunk to the new chunk
+  3.Add a new element to the new chunk.
 
 ## Group Information
 
@@ -48,11 +48,11 @@ Group members information as follows.
 ## Changelog
 
 - 29.03.2022 - 2
-  - Add test coverage.
+  Add test coverage.
 - 29.03.2022 - 1
-  - Update README. Add formal sections.
+  Update README. Add formal sections.
 - 29.03.2022 - 0
-  - Initial
+  Initial
 
 ## Design notes
 
