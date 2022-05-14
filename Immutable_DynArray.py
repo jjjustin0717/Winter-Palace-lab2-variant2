@@ -14,12 +14,12 @@ class DynArray:
     1. You have a chunk of memory. The chunk has a capacity
     (how many elements it can contain) and length
     (how many elements it contains right now).
-    2. You need to add a new element, but capacity == length. You don’t have space
-    for a new element.What will we need to do?
-    1. Allocate a new chunk of memory (in Python, usually, it looks like
-    [None]*(capacity *growth_factor))
-    2. Copy data from the old chunk to the new chunk
-    3. Add a new element to the new chunk.
+    2. You need to add a new element, but capacity == length.
+    You don’t have space for a new element.What will we need to do?
+        1. Allocate a new chunk of memory (in Python, usually, it looks like
+        [None]*(capacity *growth_factor))
+        2. Copy data from the old chunk to the new chunk
+        3. Add a new element to the new chunk.
     """
 
     def __init__(self, lst=None,
