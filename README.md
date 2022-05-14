@@ -1,4 +1,4 @@
-# Winter-Palace - lab 2 - variant 2
+# Winter Palace - lab 2 - variant 2
 
 ## Description
 
