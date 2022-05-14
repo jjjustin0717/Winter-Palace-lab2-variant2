@@ -13,14 +13,11 @@ Objectives:
 Variant 2:  Dynamic array
 
 - You can use the built-in list inside node with a fixed size
-
 - You need to check that your implementation correctly works
-
-  with None value
-
+with None value
 - You need to implement functions/methods for getting/setting
-  value by index
--  A user should specify growing factor
+value by index
+- A user should specify growing factor
 
 1. You have a chunk of memory. The chunk has a capacity
 (how many elements it can contain) and length
