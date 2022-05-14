@@ -57,7 +57,7 @@ Group members information as follows.
 
 ## Design notes
 
-- It seems we should not access a protected member of class.
+It seems we should not access a protected member of class.
 but what i saw in the given pdf you give an example like this:
   class Node(object):
     def __init__(self, value, next)
