@@ -19,28 +19,38 @@ from Immutable_DynArray import DynArray
 
 
 class TestImmutableDynArray(unittest.TestCase):
+
     def test_api(self):
         empty = DynArray()
-        array1 = empty.append(None)
-        array2 = empty.append(1)
-        l1 = array1.concatenate(array2)
-        l2 = array2.concatenate(array1)
+        l1 = DynArray([None]).concatenate(
+            DynArray([1]).concatenate(empty))
+        l2 = DynArray([1]).concatenate(
+            DynArray([None]).concatenate(empty))
+        # TODO: conj to add elements to the end
         self.assertEqual(str(empty), "[]")
         self.assertEqual(str(l1), "[None, 1]")
         self.assertEqual(str(l2), "[1, None]")
         self.assertNotEqual(l1, l2)
+        self.assertEqual(l1, DynArray([None]).concatenate(
+            DynArray([1]).concatenate(empty)))
 
         self.assertEqual(empty.size(), 0)
         self.assertEqual(l1.size(), 2)
         self.assertEqual(l2.size(), 2)
+
         self.assertEqual(str(l1.remove(None)), "[1]")
         self.assertEqual(str(l1.remove(1)), "[None]")
+
         self.assertFalse(empty.is_member(None))
         self.assertTrue(l1.is_member(None))
         self.assertTrue(l1.is_member(1))
         self.assertFalse(l2.is_member(2))
+
+        self.assertEqual(str(l1), str(l2.reverse()))
+
         self.assertEqual(l1.to_list(), [None, 1])
         self.assertEqual(l1, empty.from_list([None, 1]))
+
         self.assertEqual(l1.concatenate(l2),
                          empty.from_list([None, 1, 1, None]))
         buf = []
@@ -54,19 +64,25 @@ class TestImmutableDynArray(unittest.TestCase):
             lst.remove(e)
         self.assertEqual(lst, [])
 
+        # - filter(l, f)
         def f1(n):
             return n is not None
 
         self.assertEqual(l1.filter(f1), [1])
 
+        # - map(l, f)
         def f2(n):
             if n is None:
                 return 'None'
             return n * 2
 
         self.assertEqual(l1.map(f2).to_list(), ['None', 2])
+
+        # - reduce(l, f)
         self.assertEqual(empty.reduce(lambda st, e: st + e, 0), 0)
-        self.assertIsNone(array1.empty(), None)
+
+        # - empty()
+        self.assertIsNone(empty.empty(), None)
 
     def test_size(self):
         array = DynArray()
@@ -107,6 +123,14 @@ class TestImmutableDynArray(unittest.TestCase):
         self.assertIn(0, array3.to_list())
         self.assertIn(1, array3.to_list())
         self.assertIn(2, array3.to_list())
+
+    def test_reverse(self):
+        array = DynArray()
+        array1 = array.append(0)
+        array2 = array1.append(1)
+        array3 = array2.append(2)
+        array4 = array3.reverse()
+        self.assertEqual(array4.to_list(), [2, 1, 0])
 
     def test_to_list(self):
         array = DynArray()
