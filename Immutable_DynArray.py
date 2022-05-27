@@ -135,12 +135,20 @@ class DynArray:
         raise ValueError('value not found')
 
     def is_member(self, value: Any) -> bool:
-        """ Is member of Dynamic array"""
+        """ Is member of Dynamic array """
         dy_array = copy.deepcopy(self)
         for i in range(dy_array.size()):
             if dy_array._array[i] == value:
                 return True
         return False
+
+    def reverse(self) -> 'DynArray':
+        """ Reverse the Dynamic array for ordered """
+        array_copy = copy.deepcopy(self)
+        lst = array_copy._array[::-1]
+        lst2 = lst[-array_copy._size:]
+        dy_array = DynArray(lst2)
+        return dy_array
 
     def to_list(self) -> List[Any]:
         """ To built-in list """
