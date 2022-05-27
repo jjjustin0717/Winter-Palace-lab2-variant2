@@ -50,6 +50,17 @@ Group members information as follows.
 The second lab of CPO
 HDU-ID: 212320024
 Name: Chen Chongzhong
+Date: 2022/05/27
+
+1.Add the function in Immutable Algorithm.
+
+2.Add API tests as is from the task.
+
+---
+
+The second lab of CPO
+HDU-ID: 212320024
+Name: Chen Chongzhong
 Date: 2022/05/14
 
 1.Add the API test.
@@ -61,9 +72,9 @@ HDU-ID: 212320024
 Name: Chen Chongzhong
 Date: 2022/05/13
 
-1.Complete the unittest and PBT tests for Immutable Algorithms.
+1.Complete the unittest and PBT tests for Immutable Algorithm.
 
-2.Fix some problems in Immutable Algorithms.
+2.Fix some problems in Immutable Algorithm.
 
 ---
 
