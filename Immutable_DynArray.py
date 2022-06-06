@@ -1,5 +1,5 @@
 import copy
-from typing import Any, Callable, List, Union, TypeVar, Generic, Iterator
+from typing import Any, Callable, List, Union, TypeVar, Generic
 
 T = TypeVar('T')
 T1 = TypeVar('T1', bound=Union[None, str, int, float])
@@ -75,7 +75,7 @@ class DynArray(Generic[T]):
         self._array = re_array._array
         self._capacity = new_capacity
 
-    def _append(self, value: T1) -> None:
+    def _append(self, value: T) -> None:
         """
             When initializing the Dynamic array, lst is not None.
             append the element to the end (No matter data types)
@@ -86,7 +86,7 @@ class DynArray(Generic[T]):
         self._array[self._size] = value
         self._size += 1
 
-    def append(self, value: T1) -> 'DynArray':
+    def append(self, value: T) -> 'DynArray':
         """ Append the element to the end (No matter data types) """
         array_copy = copy.deepcopy(self)
         if array_copy._size == array_copy._capacity:
@@ -109,7 +109,7 @@ class DynArray(Generic[T]):
         the pycharm warn me that Access to a protected member _value of a class
     """
 
-    def get_item(self, index: int) -> T:
+    def get_item(self, index: int) -> T1:
         """ Get array elements based on index """
         if not 0 < index + 1 <= self._size:
             print('invalid index')
@@ -192,7 +192,7 @@ class DynArray(Generic[T]):
 
     def concatenate(self, array: 'DynArray') -> 'DynArray':
         """ Concatenate the two Dynamic arrays """
-        lst = array.to_list()  # type: List[T1]
+        lst = array.to_list()  # type: List[Any]
         array_copy = copy.deepcopy(self)
         if array.size() > 0:
             for i in range(len(lst)):
@@ -203,11 +203,11 @@ class DynArray(Generic[T]):
         """ Empty Dynamic array """
         return None
 
-    def __iter__(self) -> Iterator['DynArray']:
+    def __iter__(self):
         """ Iteration """
         return self
 
-    def __next__(self) -> T1:
+    def __next__(self):
         """ Iterator, get next element """
         if self._start <= self._size - 1:
             res = self._array[self._start]
