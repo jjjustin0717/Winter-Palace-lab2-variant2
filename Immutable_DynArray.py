@@ -1,5 +1,5 @@
 import copy
-from typing import Any, Callable, List, Union, TypeVar, Generic, Iterator
+from typing import Callable, List, Union, TypeVar, Generic, Iterator
 
 T = TypeVar('T')
 T1 = TypeVar('T1', bound=Union[None, str, int, float])
