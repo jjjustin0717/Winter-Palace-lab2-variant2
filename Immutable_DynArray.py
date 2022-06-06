@@ -2,7 +2,7 @@ import copy
 from typing import Any, Callable, List, Union, TypeVar, Generic
 
 T = TypeVar('T')
-T1 = TypeVar('T1', bound=Union[None, str, int, float])
+T1 = TypeVar('T1', bound=Union[str, int, float])
 
 
 class DynArray(Generic[T]):
@@ -109,13 +109,13 @@ class DynArray(Generic[T]):
         the pycharm warn me that Access to a protected member _value of a class
     """
 
-    def get_item(self, index: int) -> T1:
+    def get_item(self, index: int) -> Any:
         """ Get array elements based on index """
         if not 0 < index + 1 <= self._size:
             print('invalid index')
         return self._array[index]
 
-    def set_item(self, index: int, value: T1) -> 'DynArray':
+    def set_item(self, index: int, value: Any) -> 'DynArray':
         """ Set an element with specific index / key """
         dy_array = copy.deepcopy(self)
         if not 0 < index + 1 <= dy_array._size:
@@ -155,7 +155,7 @@ class DynArray(Generic[T]):
 
     def to_list(self) -> List[T1]:
         """ To built-in list """
-        arr_list = []  # type: List[T1]
+        arr_list = []  # type: List[Any]
         if self.size() > 0:
             for i in range(self.size()):
                 arr_list.append(self._array[i])
@@ -170,7 +170,7 @@ class DynArray(Generic[T]):
 
     def filter(self, f: Callable[..., Any]) -> List[T1]:
         """ Filter data structure by specific predicate """
-        lst = []  # type: List[T1]
+        lst = []  # type: List[Any]
         for i in range(self.size()):
             if f(self._array[i]):
                 lst.append(self._array[i])
