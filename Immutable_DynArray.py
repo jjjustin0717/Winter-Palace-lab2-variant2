@@ -192,7 +192,7 @@ class DynArray:
 
     def concatenate(self, array: 'DynArray') -> 'DynArray':
         """ Concatenate the two Dynamic arrays """
-        lst = array.to_list() # type:  List[T1]
+        lst = array.to_list()  # type: List[T1]
         array_copy = copy.deepcopy(self)
         if array.size() > 0:
             for i in range(len(lst)):
