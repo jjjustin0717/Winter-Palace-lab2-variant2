@@ -40,7 +40,7 @@ class DynArray(Generic[T]):
         for value in lst:
             self._append(value)
 
-    def __eq__(self, other: T) -> bool:
+    def __eq__(self, other: Any) -> bool:
         """ Equal function """
         if other is None:
             return False
