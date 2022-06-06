@@ -25,7 +25,7 @@ class DynArray(Generic[T]):
             3. Add a new element to the new chunk.
     """
 
-    def __init__(self, lst: List[T1],
+    def __init__(self, lst: List[Any] = None,
                  init_capacity: int = 5, growth_factor: int = 2):
         """ Initialize the array """
         if lst is None:
