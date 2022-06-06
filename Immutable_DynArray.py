@@ -69,7 +69,7 @@ class DynArray(Generic[T]):
     def resize(self, new_capacity: int) -> None:
         """ Resize the Dynamic array """
         re_array: 'DynArray[T]' = DynArray(init_capacity=new_capacity,
-                                        growth_factor=self._growth_factor)
+                                           growth_factor=self._growth_factor)
         for k in range(self._size):
             re_array._append(self._array[k])
         self._array = re_array._array
