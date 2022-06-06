@@ -1,5 +1,8 @@
 import copy
-from typing import Any, Callable, List
+from typing import Any, Callable, List, Union, TypeVar, Iterator
+
+T = TypeVar('T')
+T1 = TypeVar('T1', bound=Union[None, str, int, float])
 
 
 class DynArray:
@@ -22,7 +25,7 @@ class DynArray:
             3. Add a new element to the new chunk.
     """
 
-    def __init__(self, lst: Any = None,
+    def __init__(self, lst: List[T1] = None,
                  init_capacity: int = 5, growth_factor: int = 2):
         """ Initialize the array """
         if lst is None:
@@ -37,7 +40,7 @@ class DynArray:
         for value in lst:
             self._append(value)
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: 'DynArray') -> bool:
         """ Equal function """
         if other is None:
             return False
@@ -72,7 +75,7 @@ class DynArray:
         self._array = re_array._array
         self._capacity = new_capacity
 
-    def _append(self, value: Any) -> None:
+    def _append(self, value: T1) -> None:
         """
             When initializing the Dynamic array, lst is not None.
             append the element to the end (No matter data types)
@@ -83,7 +86,7 @@ class DynArray:
         self._array[self._size] = value
         self._size += 1
 
-    def append(self, value: Any) -> 'DynArray':
+    def append(self, value: T) -> 'DynArray':
         """ Append the element to the end (No matter data types) """
         array_copy = copy.deepcopy(self)
         if array_copy._size == array_copy._capacity:
@@ -106,13 +109,13 @@ class DynArray:
         the pycharm warn me that Access to a protected member _value of a class
     """
 
-    def get_item(self, index: int) -> Any:
+    def get_item(self, index: int) -> T:
         """ Get array elements based on index """
         if not 0 < index + 1 <= self._size:
             print('invalid index')
         return self._array[index]
 
-    def set_item(self, index: int, value: Any) -> 'DynArray':
+    def set_item(self, index: int, value: T) -> 'DynArray':
         """ Set an element with specific index / key """
         dy_array = copy.deepcopy(self)
         if not 0 < index + 1 <= dy_array._size:
@@ -120,7 +123,7 @@ class DynArray:
         dy_array._array[index] = value
         return dy_array
 
-    def remove(self, value: Any) -> Any:
+    def remove(self, value: T) -> 'DynArray':
         """ Remove an element (key, index, or value) """
         dy_array = copy.deepcopy(self)
         for i in range(dy_array._size):
@@ -134,7 +137,7 @@ class DynArray:
                 return dy_array
         raise ValueError('value not found')
 
-    def is_member(self, value: Any) -> bool:
+    def is_member(self, value: T1) -> bool:
         """ Is member of Dynamic array """
         dy_array = copy.deepcopy(self)
         for i in range(dy_array.size()):
@@ -150,24 +153,24 @@ class DynArray:
         dy_array = DynArray(lst2)
         return dy_array
 
-    def to_list(self) -> List[Any]:
+    def to_list(self) -> List[T]:
         """ To built-in list """
-        arr_list = []  # type: List[Any]
+        arr_list = []  # type: List[T1]
         if self.size() > 0:
             for i in range(self.size()):
                 arr_list.append(self._array[i])
         return arr_list
 
-    def from_list(self, lst: List[Any]) -> 'DynArray':
+    def from_list(self, lst: List[T1]) -> 'DynArray':
         """ From built-in list """
         dy_array = copy.deepcopy(self)
         for value in lst:
             dy_array._append(value)
         return dy_array
 
-    def filter(self, f: Callable[..., Any]) -> List[Any]:
+    def filter(self, f: Callable[..., Any]) -> List[T]:
         """ Filter data structure by specific predicate """
-        lst = []  # type: List[Any]
+        lst = []  # type: List[T]
         for i in range(self.size()):
             if f(self._array[i]):
                 lst.append(self._array[i])
@@ -180,14 +183,14 @@ class DynArray:
             dy_array._array[i] = f(dy_array._array[i])
         return dy_array
 
-    def reduce(self, f: Callable[..., Any], initial_state: Any) -> Any:
+    def reduce(self, f: Callable[..., Any], initial_state: T) -> T:
         """ Reduce process elements and build a value by the function """
         state = initial_state
         for i in range(self._size):
             state = f(state, self._array[i])
         return state
 
-    def concatenate(self, array: "DynArray") -> 'DynArray':
+    def concatenate(self, array: 'DynArray') -> 'DynArray':
         """ Concatenate the two Dynamic arrays """
         lst = array.to_list()
         array_copy = copy.deepcopy(self)
@@ -200,11 +203,11 @@ class DynArray:
         """ Empty Dynamic array """
         return None
 
-    def __iter__(self) -> Any:
+    def __iter__(self) -> Iterator['DynArray']:
         """ Iteration """
         return self
 
-    def __next__(self) -> Any:
+    def __next__(self):
         """ Iterator, get next element """
         if self._start <= self._size - 1:
             res = self._array[self._start]
