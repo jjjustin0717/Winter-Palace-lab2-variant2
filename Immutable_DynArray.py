@@ -2,7 +2,7 @@ import copy
 from typing import Any, Callable, List, Union, TypeVar, Generic
 
 T = TypeVar('T')
-T1 = TypeVar('T1', bound=Union[str, int, float])
+T1 = TypeVar('T1', bound=Union[None, str, int, float])
 
 
 class DynArray(Generic[T]):
@@ -25,7 +25,7 @@ class DynArray(Generic[T]):
             3. Add a new element to the new chunk.
     """
 
-    def __init__(self, lst: List[T] = None,
+    def __init__(self, lst: List[T1] = None,
                  init_capacity: int = 5, growth_factor: int = 2):
         """ Initialize the array """
         if lst is None:
@@ -40,7 +40,7 @@ class DynArray(Generic[T]):
         for value in lst:
             self._append(value)
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: T) -> bool:
         """ Equal function """
         if other is None:
             return False
@@ -68,7 +68,7 @@ class DynArray(Generic[T]):
 
     def resize(self, new_capacity: int) -> None:
         """ Resize the Dynamic array """
-        re_array: 'DynArray' = DynArray(init_capacity=new_capacity,
+        re_array: 'DynArray[T]' = DynArray(init_capacity=new_capacity,
                                         growth_factor=self._growth_factor)
         for k in range(self._size):
             re_array._append(self._array[k])
@@ -86,7 +86,7 @@ class DynArray(Generic[T]):
         self._array[self._size] = value
         self._size += 1
 
-    def append(self, value: Any) -> 'DynArray':
+    def append(self, value: Any) -> 'DynArray[T]':
         """ Append the element to the end (No matter data types) """
         array_copy = copy.deepcopy(self)
         if array_copy._size == array_copy._capacity:
@@ -115,7 +115,7 @@ class DynArray(Generic[T]):
             print('invalid index')
         return self._array[index]
 
-    def set_item(self, index: int, value: Any) -> 'DynArray':
+    def set_item(self, index: int, value: Any) -> 'DynArray[T]':
         """ Set an element with specific index / key """
         dy_array = copy.deepcopy(self)
         if not 0 < index + 1 <= dy_array._size:
@@ -123,7 +123,7 @@ class DynArray(Generic[T]):
         dy_array._array[index] = value
         return dy_array
 
-    def remove(self, value: T1) -> 'DynArray':
+    def remove(self, value: T1) -> 'DynArray[T]':
         """ Remove an element (key, index, or value) """
         dy_array = copy.deepcopy(self)
         for i in range(dy_array._size):
@@ -145,12 +145,12 @@ class DynArray(Generic[T]):
                 return True
         return False
 
-    def reverse(self) -> 'DynArray':
+    def reverse(self) -> 'DynArray[T]':
         """ Reverse the Dynamic array for ordered """
         array_copy = copy.deepcopy(self)
         lst = array_copy._array[::-1]
         lst2 = lst[-array_copy._size:]
-        dy_array = DynArray(lst2)  # type: DynArray
+        dy_array = DynArray(lst2)  # type: DynArray[T]
         return dy_array
 
     def to_list(self) -> List[T1]:
@@ -161,7 +161,7 @@ class DynArray(Generic[T]):
                 arr_list.append(self._array[i])
         return arr_list
 
-    def from_list(self, lst: List[T1]) -> 'DynArray':
+    def from_list(self, lst: List[T1]) -> 'DynArray[T]':
         """ From built-in list """
         dy_array = copy.deepcopy(self)
         for value in lst:
@@ -176,7 +176,7 @@ class DynArray(Generic[T]):
                 lst.append(self._array[i])
         return lst
 
-    def map(self, f: Callable[..., Any]) -> 'DynArray':
+    def map(self, f: Callable[..., Any]) -> 'DynArray[T]':
         """ Map structure by specific function """
         dy_array = copy.deepcopy(self)
         for i in range(dy_array.size()):
@@ -190,7 +190,7 @@ class DynArray(Generic[T]):
             state = f(state, self._array[i])
         return state
 
-    def concatenate(self, array: 'DynArray') -> 'DynArray':
+    def concatenate(self, array: 'DynArray[T]') -> 'DynArray[T]':
         """ Concatenate the two Dynamic arrays """
         lst = array.to_list()  # type: List[Any]
         array_copy = copy.deepcopy(self)
@@ -203,11 +203,11 @@ class DynArray(Generic[T]):
         """ Empty Dynamic array """
         return None
 
-    def __iter__(self):
+    def __iter__(self) -> 'DynArray[T]':
         """ Iteration """
         return self
 
-    def __next__(self):
+    def __next__(self) -> Any:
         """ Iterator, get next element """
         if self._start <= self._size - 1:
             res = self._array[self._start]
