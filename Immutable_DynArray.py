@@ -40,7 +40,7 @@ class DynArray:
         for value in lst:
             self._append(value)
 
-    def __eq__(self, other: 'DynArray') -> bool:
+    def __eq__(self, other: T) -> bool:
         """ Equal function """
         if other is None:
             return False
@@ -86,7 +86,7 @@ class DynArray:
         self._array[self._size] = value
         self._size += 1
 
-    def append(self, value: T) -> 'DynArray':
+    def append(self, value: T1) -> 'DynArray':
         """ Append the element to the end (No matter data types) """
         array_copy = copy.deepcopy(self)
         if array_copy._size == array_copy._capacity:
@@ -109,13 +109,13 @@ class DynArray:
         the pycharm warn me that Access to a protected member _value of a class
     """
 
-    def get_item(self, index: int) -> T:
+    def get_item(self, index: int) -> T1:
         """ Get array elements based on index """
         if not 0 < index + 1 <= self._size:
             print('invalid index')
         return self._array[index]
 
-    def set_item(self, index: int, value: T) -> 'DynArray':
+    def set_item(self, index: int, value: T1) -> 'DynArray':
         """ Set an element with specific index / key """
         dy_array = copy.deepcopy(self)
         if not 0 < index + 1 <= dy_array._size:
@@ -168,9 +168,9 @@ class DynArray:
             dy_array._append(value)
         return dy_array
 
-    def filter(self, f: Callable[..., Any]) -> List[T]:
+    def filter(self, f: Callable[..., Any]) -> List[T1]:
         """ Filter data structure by specific predicate """
-        lst = []  # type: List[T]
+        lst = []  # type: List[T1]
         for i in range(self.size()):
             if f(self._array[i]):
                 lst.append(self._array[i])
@@ -192,7 +192,7 @@ class DynArray:
 
     def concatenate(self, array: 'DynArray') -> 'DynArray':
         """ Concatenate the two Dynamic arrays """
-        lst = array.to_list()
+        lst = array.to_list() # type:  List[T1]
         array_copy = copy.deepcopy(self)
         if array.size() > 0:
             for i in range(len(lst)):
