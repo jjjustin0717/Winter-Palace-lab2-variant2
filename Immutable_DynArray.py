@@ -25,7 +25,7 @@ class DynArray(Generic[T]):
             3. Add a new element to the new chunk.
     """
 
-    def __init__(self, lst: List[T1] = None,
+    def __init__(self, lst: List[T] = None,
                  init_capacity: int = 5, growth_factor: int = 2):
         """ Initialize the array """
         if lst is None:
@@ -75,7 +75,7 @@ class DynArray(Generic[T]):
         self._array = re_array._array
         self._capacity = new_capacity
 
-    def _append(self, value: T) -> None:
+    def _append(self, value: Any) -> None:
         """
             When initializing the Dynamic array, lst is not None.
             append the element to the end (No matter data types)
@@ -86,7 +86,7 @@ class DynArray(Generic[T]):
         self._array[self._size] = value
         self._size += 1
 
-    def append(self, value: T) -> 'DynArray':
+    def append(self, value: Any) -> 'DynArray':
         """ Append the element to the end (No matter data types) """
         array_copy = copy.deepcopy(self)
         if array_copy._size == array_copy._capacity:
