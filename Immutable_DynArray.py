@@ -1,11 +1,11 @@
 import copy
-from typing import Any, Callable, List, Union, TypeVar, Iterator
+from typing import Any, Callable, List, Union, TypeVar, Generic, Iterator
 
 T = TypeVar('T')
 T1 = TypeVar('T1', bound=Union[None, str, int, float])
 
 
-class DynArray:
+class DynArray(Generic[T]):
     """
         • You can use the built-in list inside node with a fixed size
         • You need to check that your implementation correctly works
@@ -109,7 +109,7 @@ class DynArray:
         the pycharm warn me that Access to a protected member _value of a class
     """
 
-    def get_item(self, index: int) -> T1:
+    def get_item(self, index: int) -> T:
         """ Get array elements based on index """
         if not 0 < index + 1 <= self._size:
             print('invalid index')
@@ -123,7 +123,7 @@ class DynArray:
         dy_array._array[index] = value
         return dy_array
 
-    def remove(self, value: T) -> 'DynArray':
+    def remove(self, value: T1) -> 'DynArray':
         """ Remove an element (key, index, or value) """
         dy_array = copy.deepcopy(self)
         for i in range(dy_array._size):
@@ -153,7 +153,7 @@ class DynArray:
         dy_array = DynArray(lst2)
         return dy_array
 
-    def to_list(self) -> List[T]:
+    def to_list(self) -> List[T1]:
         """ To built-in list """
         arr_list = []  # type: List[T1]
         if self.size() > 0:
@@ -168,7 +168,7 @@ class DynArray:
             dy_array._append(value)
         return dy_array
 
-    def filter(self, f: Callable[..., Any]) -> List[T1]:
+    def filter(self, f: Callable[..., T]) -> List[T1]:
         """ Filter data structure by specific predicate """
         lst = []  # type: List[T1]
         for i in range(self.size()):
@@ -176,14 +176,14 @@ class DynArray:
                 lst.append(self._array[i])
         return lst
 
-    def map(self, f: Callable[..., Any]) -> 'DynArray':
+    def map(self, f: Callable[..., T]) -> 'DynArray':
         """ Map structure by specific function """
         dy_array = copy.deepcopy(self)
         for i in range(dy_array.size()):
             dy_array._array[i] = f(dy_array._array[i])
         return dy_array
 
-    def reduce(self, f: Callable[..., Any], initial_state: T) -> T:
+    def reduce(self, f: Callable[..., T], initial_state: T) -> T:
         """ Reduce process elements and build a value by the function """
         state = initial_state
         for i in range(self._size):
@@ -207,7 +207,7 @@ class DynArray:
         """ Iteration """
         return self
 
-    def __next__(self):
+    def __next__(self) -> T1:
         """ Iterator, get next element """
         if self._start <= self._size - 1:
             res = self._array[self._start]
