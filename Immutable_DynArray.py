@@ -1,5 +1,5 @@
 import copy
-from typing import Callable, List, Union, TypeVar, Generic, Iterator
+from typing import Any, Callable, List, Union, TypeVar, Generic, Iterator
 
 T = TypeVar('T')
 T1 = TypeVar('T1', bound=Union[None, str, int, float])
@@ -40,7 +40,7 @@ class DynArray(Generic[T]):
         for value in lst:
             self._append(value)
 
-    def __eq__(self, other: T) -> bool:
+    def __eq__(self, other) -> bool:
         """ Equal function """
         if other is None:
             return False
@@ -68,8 +68,8 @@ class DynArray(Generic[T]):
 
     def resize(self, new_capacity: int) -> None:
         """ Resize the Dynamic array """
-        re_array = DynArray(init_capacity=new_capacity,
-                            growth_factor=self._growth_factor)
+        re_array: 'DynArray' = DynArray(init_capacity=new_capacity,
+                                        growth_factor=self._growth_factor)
         for k in range(self._size):
             re_array._append(self._array[k])
         self._array = re_array._array
@@ -150,7 +150,7 @@ class DynArray(Generic[T]):
         array_copy = copy.deepcopy(self)
         lst = array_copy._array[::-1]
         lst2 = lst[-array_copy._size:]
-        dy_array = DynArray(lst2)
+        dy_array = DynArray(lst2)  # type: DynArray
         return dy_array
 
     def to_list(self) -> List[T1]:
@@ -168,7 +168,7 @@ class DynArray(Generic[T]):
             dy_array._append(value)
         return dy_array
 
-    def filter(self, f: Callable[..., T]) -> List[T1]:
+    def filter(self, f: Callable[..., Any]) -> List[T1]:
         """ Filter data structure by specific predicate """
         lst = []  # type: List[T1]
         for i in range(self.size()):
@@ -176,14 +176,14 @@ class DynArray(Generic[T]):
                 lst.append(self._array[i])
         return lst
 
-    def map(self, f: Callable[..., T]) -> 'DynArray':
+    def map(self, f: Callable[..., Any]) -> 'DynArray':
         """ Map structure by specific function """
         dy_array = copy.deepcopy(self)
         for i in range(dy_array.size()):
             dy_array._array[i] = f(dy_array._array[i])
         return dy_array
 
-    def reduce(self, f: Callable[..., T], initial_state: T) -> T:
+    def reduce(self, f: Callable[..., Any], initial_state: T) -> T:
         """ Reduce process elements and build a value by the function """
         state = initial_state
         for i in range(self._size):
