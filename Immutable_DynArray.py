@@ -2,7 +2,7 @@ import copy
 from typing import Any, Callable, List, Union, TypeVar, Generic, Optional
 
 T = TypeVar('T')
-T1 = TypeVar('T1', bound=Union[None, str, int, float])
+T1 = TypeVar('T1', bound=Union[str, int, float])
 
 
 class DynArray(Generic[T]):
@@ -115,7 +115,7 @@ class DynArray(Generic[T]):
             print('invalid index')
         return self._array[index]
 
-    def set_item(self, index: int, value: Optional[T1]) -> 'DynArray[T]':
+    def set_item(self, index: int, value: Any) -> 'DynArray[T]':
         """ Set an element with specific index / key """
         dy_array = copy.deepcopy(self)
         if not 0 < index + 1 <= dy_array._size:
