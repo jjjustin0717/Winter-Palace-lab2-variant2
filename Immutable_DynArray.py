@@ -207,7 +207,7 @@ class DynArray(Generic[T]):
         """ Iteration """
         return self
 
-    def __next__(self) -> Optional[str, int, float]:
+    def __next__(self) -> Optional[T1]:
         """ Iterator, get next element """
         if self._start <= self._size - 1:
             res = self._array[self._start]
