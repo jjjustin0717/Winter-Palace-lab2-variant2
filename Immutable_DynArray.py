@@ -1,7 +1,8 @@
 import copy
 from typing import Any, Callable, List, Union, TypeVar, Generic, Optional
 
-T = TypeVar('T', bound=Union[None, str, int, float])
+T = TypeVar('T')
+T1 = TypeVar('T1', bound=Union[None, str, int, float])
 
 
 class DynArray(Generic[T]):
@@ -24,7 +25,7 @@ class DynArray(Generic[T]):
             3. Add a new element to the new chunk.
     """
 
-    def __init__(self, lst: Optional[List[T]] = None,
+    def __init__(self, lst: Optional[List[T1]] = None,
                  init_capacity: int = 5, growth_factor: int = 2):
         """ Initialize the array """
         if lst is None:
@@ -122,7 +123,7 @@ class DynArray(Generic[T]):
         dy_array._array[index] = value
         return dy_array
 
-    def remove(self, value: T) -> 'DynArray[T]':
+    def remove(self, value: T1) -> 'DynArray[T]':
         """ Remove an element (key, index, or value) """
         dy_array = copy.deepcopy(self)
         for i in range(dy_array._size):
@@ -136,7 +137,7 @@ class DynArray(Generic[T]):
                 return dy_array
         raise ValueError('value not found')
 
-    def is_member(self, value: T) -> bool:
+    def is_member(self, value: T1) -> bool:
         """ Is member of Dynamic array """
         dy_array = copy.deepcopy(self)
         for i in range(dy_array.size()):
@@ -152,24 +153,24 @@ class DynArray(Generic[T]):
         dy_array = DynArray(lst2)  # type: DynArray[T]
         return dy_array
 
-    def to_list(self) -> List[T]:
+    def to_list(self) -> List[T1]:
         """ To built-in list """
-        arr_list = []  # type:List[T]
+        arr_list = []  # type: List[Any]
         if self.size() > 0:
             for i in range(self.size()):
                 arr_list.append(self._array[i])
         return arr_list
 
-    def from_list(self, lst: List[T]) -> 'DynArray[T]':
+    def from_list(self, lst: List[T1]) -> 'DynArray[T]':
         """ From built-in list """
         dy_array = copy.deepcopy(self)
         for value in lst:
             dy_array._append(value)
         return dy_array
 
-    def filter(self, f: Callable[..., Any]) -> List[T]:
+    def filter(self, f: Callable[..., Any]) -> List[T1]:
         """ Filter data structure by specific predicate """
-        lst = []  # type: List[T]
+        lst = []  # type: List[Any]
         for i in range(self.size()):
             if f(self._array[i]):
                 lst.append(self._array[i])
@@ -191,7 +192,7 @@ class DynArray(Generic[T]):
 
     def concatenate(self, array: 'DynArray[T]') -> 'DynArray[T]':
         """ Concatenate the two Dynamic arrays """
-        lst = array.to_list()  # type: List[Optional[T]]
+        lst = array.to_list()  # type: List[Any]
         array_copy = copy.deepcopy(self)
         if array.size() > 0:
             for i in range(len(lst)):
@@ -206,7 +207,7 @@ class DynArray(Generic[T]):
         """ Iteration """
         return self
 
-    def __next__(self) -> Optional[T]:
+    def __next__(self) -> Optional[T1]:
         """ Iterator, get next element """
         if self._start <= self._size - 1:
             res = self._array[self._start]
