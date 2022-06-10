@@ -5,7 +5,7 @@ T = TypeVar('T')
 T1 = TypeVar('T1', bound=Union[None, str, int, float])
 
 
-class DynArray(Generic[T]):
+class DynArray(Generic[T, T1]):
     """
         • You can use the built-in list inside node with a fixed size
         • You need to check that your implementation correctly works
@@ -153,7 +153,7 @@ class DynArray(Generic[T]):
         dy_array = DynArray(lst2)  # type: DynArray[T]
         return dy_array
 
-    def to_list(self) -> List[T1]:
+    def to_list(self) -> List[Optional[T1]]:
         """ To built-in list """
         arr_list = []  # type:List[Optional[T1]]
         if self.size() > 0:
