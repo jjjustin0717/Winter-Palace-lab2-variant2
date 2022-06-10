@@ -50,6 +50,15 @@ Group members information as follows.
 The second lab of CPO
 HDU-ID: 212320024
 Name: Chen Chongzhong
+Date: 2022/06/10
+
+1.Fix some problems.
+
+---
+
+The second lab of CPO
+HDU-ID: 212320024
+Name: Chen Chongzhong
 Date: 2022/05/27
 
 1.Add the function in Immutable Algorithm.
