@@ -86,7 +86,7 @@ class DynArray(Generic[T]):
         self._array[self._size] = value
         self._size += 1
 
-    def append(self, value: Union[str, int, None]) -> 'DynArray[T]':
+    def append(self, value: None) -> 'DynArray[T]':
         """ Append the element to the end (No matter data types) """
         array_copy = copy.deepcopy(self)
         if array_copy._size == array_copy._capacity:
