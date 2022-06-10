@@ -5,7 +5,7 @@ T = TypeVar('T')
 T1 = TypeVar('T1', bound=Union[None, str, int, float])
 
 
-class DynArray(Generic[T, T1]):
+class DynArray(Generic[T]):
     """
         • You can use the built-in list inside node with a fixed size
         • You need to check that your implementation correctly works
