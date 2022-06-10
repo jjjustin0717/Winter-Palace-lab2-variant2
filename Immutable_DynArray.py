@@ -1,5 +1,5 @@
 import copy
-from typing import Any, Callable, List, Union, TypeVar, Generic
+from typing import Any, Callable, List, Union, TypeVar, Generic, Optional
 
 T = TypeVar('T')
 T1 = TypeVar('T1', bound=Union[None, str, int, float])
@@ -207,7 +207,7 @@ class DynArray(Generic[T]):
         """ Iteration """
         return self
 
-    def __next__(self) -> Any:
+    def __next__(self) -> Optional[str, int, float]:
         """ Iterator, get next element """
         if self._start <= self._size - 1:
             res = self._array[self._start]
