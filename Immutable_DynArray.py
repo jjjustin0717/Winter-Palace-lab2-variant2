@@ -115,7 +115,7 @@ class DynArray(Generic[T]):
             print('invalid index')
         return self._array[index]
 
-    def set_item(self, index: int, value: None) -> 'DynArray[T]':
+    def set_item(self, index: int, value: Any) -> 'DynArray[T]':
         """ Set an element with specific index / key """
         dy_array = copy.deepcopy(self)
         if not 0 < index + 1 <= dy_array._size:
