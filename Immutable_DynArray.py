@@ -109,7 +109,7 @@ class DynArray(Generic[T]):
         the pycharm warn me that Access to a protected member _value of a class
     """
 
-    def get_item(self, index: int) -> Any:
+    def get_item(self, index: int) -> Optional[T1]:
         """ Get array elements based on index """
         if not 0 < index + 1 <= self._size:
             print('invalid index')
