@@ -25,7 +25,7 @@ class DynArray(Generic[T]):
             3. Add a new element to the new chunk.
     """
 
-    def __init__(self, lst: Any = None,
+    def __init__(self, lst: Optional[T1] = None,
                  init_capacity: int = 5, growth_factor: int = 2):
         """ Initialize the array """
         if lst is None:
@@ -40,7 +40,7 @@ class DynArray(Generic[T]):
         for value in lst:
             self._append(value)
 
-    def __eq__(self, other: 'DynArray[T]') -> bool:
+    def __eq__(self, other: object) -> bool:
         """ Equal function """
         if other is None:
             return False
