@@ -75,7 +75,7 @@ class DynArray(Generic[T]):
         self._array = re_array._array
         self._capacity = new_capacity
 
-    def _append(self, value: Optional[T1]) -> None:
+    def _append(self, value: Union[T1, None]) -> None:
         """
             When initializing the Dynamic array, lst is not None.
             append the element to the end (No matter data types)
@@ -86,7 +86,7 @@ class DynArray(Generic[T]):
         self._array[self._size] = value
         self._size += 1
 
-    def append(self, value: Optional[T1]) -> 'DynArray[T]':
+    def append(self, value:Union[T1, None]) -> 'DynArray[T]':
         """ Append the element to the end (No matter data types) """
         array_copy = copy.deepcopy(self)
         if array_copy._size == array_copy._capacity:
