@@ -5,7 +5,7 @@ T = TypeVar('T')
 T1 = TypeVar('T1', bound=Union[None, str, int, float])
 
 
-class DynArray(Generic[T]):
+class DynArray(Generic[T, T1]):
     """
         • You can use the built-in list inside node with a fixed size
         • You need to check that your implementation correctly works
@@ -153,9 +153,9 @@ class DynArray(Generic[T]):
         dy_array = DynArray(lst2)  # type: DynArray[T]
         return dy_array
 
-    def to_list(self) -> List[T]:
+    def to_list(self) -> List[T1]:
         """ To built-in list """
-        arr_list = []  # type:List[T]
+        arr_list = []  # type:List[T1]
         if self.size() > 0:
             for i in range(self.size()):
                 arr_list.append(self._array[i])
@@ -168,9 +168,9 @@ class DynArray(Generic[T]):
             dy_array._append(value)
         return dy_array
 
-    def filter(self, f: Callable[..., Any]) -> List[T]:
+    def filter(self, f: Callable[..., Any]) -> List[T1]:
         """ Filter data structure by specific predicate """
-        lst = []  # type: List[T]
+        lst = []  # type: List[T1]
         for i in range(self.size()):
             if f(self._array[i]):
                 lst.append(self._array[i])
