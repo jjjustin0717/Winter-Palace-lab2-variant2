@@ -153,9 +153,9 @@ class DynArray(Generic[T]):
         dy_array = DynArray(lst2)  # type: DynArray[T]
         return dy_array
 
-    def to_list(self) -> List[T1]:
+    def to_list(self) -> List[T]:
         """ To built-in list """
-        arr_list = []  # type:List[T1]
+        arr_list = []  # type:List[T]
         if self.size() > 0:
             for i in range(self.size()):
                 arr_list.append(self._array[i])
@@ -168,9 +168,9 @@ class DynArray(Generic[T]):
             dy_array._append(value)
         return dy_array
 
-    def filter(self, f: Callable[..., Any]) -> List[T1]:
+    def filter(self, f: Callable[..., Any]) -> List[T]:
         """ Filter data structure by specific predicate """
-        lst = []  # type: List[T1]
+        lst = []  # type: List[T]
         for i in range(self.size()):
             if f(self._array[i]):
                 lst.append(self._array[i])
