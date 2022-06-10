@@ -75,7 +75,7 @@ class DynArray(Generic[T]):
         self._array = re_array._array
         self._capacity = new_capacity
 
-    def _append(self, value: Any) -> None:
+    def _append(self, value: None) -> None:
         """
             When initializing the Dynamic array, lst is not None.
             append the element to the end (No matter data types)
