@@ -13,7 +13,7 @@ import unittest
 
 from hypothesis import given
 import hypothesis.strategies as st
-from typing import List, Any, TypeVar, Union
+from typing import List, Any, TypeVar, Union, Iterator, Optional
 
 from Immutable_DynArray import DynArray
 
@@ -73,7 +73,7 @@ class TestImmutableDynArray(unittest.TestCase):
         self.assertEqual(l1.filter(f1), [1])
 
         # - map(l, f)
-        def f2(n: T) -> Union[str, int]:
+        def f2(n: T) -> Optional[T]:
             if n is None:
                 return 'None'
             return n * 2
@@ -170,7 +170,7 @@ class TestImmutableDynArray(unittest.TestCase):
             """ Filter function f: callable """
             return n % 2 == 0
 
-        array = DynArray(lst=[0, 1, 2, 3, 4])
+        array: DynArray = DynArray(lst=[0, 1, 2, 3, 4])
         self.assertEqual(array.filter(is_even), [0, 2, 4])
 
     def test_map(self) -> None:
@@ -178,22 +178,22 @@ class TestImmutableDynArray(unittest.TestCase):
             """ Map function f: callable """
             return n + 2
 
-        array = DynArray(lst=[0, 1, 2, 3, 4])
+        array: DynArray = DynArray(lst=[0, 1, 2, 3, 4])
         self.assertEqual(array.map(increment).to_list(), [2, 3, 4, 5, 6])
 
     def test_reduce(self) -> None:
-        array1 = DynArray()
+        array1: DynArray = DynArray()
         self.assertEqual(array1.reduce(lambda st, e: st + e, 0), 0)
 
-        array2 = DynArray()
+        array2: DynArray = DynArray()
         array3 = array2.from_list([1, 2, 3])
         self.assertEqual(array3.reduce(lambda st, e: st + e, 0), 6)
 
     def test_concatenate(self) -> None:
         lst1 = [0, 1, 2]
         lst2 = [3, 4]
-        array1 = DynArray(lst=lst1)
-        array2 = DynArray(lst=lst2)
+        array1: DynArray = DynArray(lst=lst1)
+        array2: DynArray = DynArray(lst=lst2)
         array3 = array1.concatenate(array2)
         self.assertEqual(array1.to_list(), [0, 1, 2])
         self.assertEqual(array2.to_list(), [3, 4])
@@ -215,7 +215,7 @@ class TestImmutableDynArray(unittest.TestCase):
 
     @given(st.lists(st.integers()))
     def test_from_list_to_list_equality(self, a) -> None:
-        array = DynArray(lst=a)
+        array: DynArray = DynArray(lst=a)
         b = array.to_list()  # type: List[Any]
         self.assertEqual(a, b)
 
@@ -240,7 +240,7 @@ class TestImmutableDynArray(unittest.TestCase):
             tmp.append(e)
         self.assertEqual(lst, tmp)
         self.assertEqual(array.to_list(), tmp)
-        i = iter(DynArray())
+        i = iter(DynArray())  # type: Iterator[T]
         self.assertRaises(StopIteration, lambda: next(i))
 
 
