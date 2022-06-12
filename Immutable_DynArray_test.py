@@ -150,6 +150,7 @@ class TestImmutableDynArray(unittest.TestCase):
         ]
         for e in test_data:
             array1: DynArray = DynArray()
+            e = list(e)
             array2: DynArray = array1.from_list(lst=e)
             self.assertEqual(array2.to_list(), e)
 
@@ -160,6 +161,7 @@ class TestImmutableDynArray(unittest.TestCase):
         ]
         for e in test_data:
             array3: DynArray = DynArray()
+            e = list(e)
             array4: DynArray = array3.from_list(lst=e)
             self.assertEqual(array4.to_list(), e)
 
