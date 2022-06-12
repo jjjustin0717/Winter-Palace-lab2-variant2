@@ -19,6 +19,7 @@ from Immutable_DynArray import DynArray
 
 T = TypeVar('T', bound=Union[None, str, int, float])
 
+
 class TestImmutableDynArray(unittest.TestCase):
 
     def test_api(self) -> None:
