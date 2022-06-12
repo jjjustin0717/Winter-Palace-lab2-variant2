@@ -34,7 +34,7 @@ class TestImmutableDynArray(unittest.TestCase, Generic[T]):
         self.assertEqual(str(l2), "[1, None]")
         self.assertNotEqual(l1, l2)
         self.assertEqual(l1, DynArray([None]).concatenate(
-            DynArray([1]).concatenate(empty)))
+            DynArray([1]).concatenate(empty)))  # type: ignore
 
         self.assertEqual(empty.size(), 0)
         self.assertEqual(l1.size(), 2)
