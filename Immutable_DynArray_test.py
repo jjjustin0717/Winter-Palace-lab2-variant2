@@ -13,11 +13,9 @@ import unittest
 
 from hypothesis import given
 import hypothesis.strategies as st
-from typing import List, Any, TypeVar, Union, Iterator, Optional
+from typing import List, Any, Iterator
 
 from Immutable_DynArray import DynArray
-
-T = TypeVar('T', bound=Union[None, str, int, float])
 
 
 class TestImmutableDynArray(unittest.TestCase):
@@ -67,13 +65,13 @@ class TestImmutableDynArray(unittest.TestCase):
         self.assertEqual(lst, [])
 
         # - filter(l, f)
-        def f1(n: T) -> bool:
+        def f1(n: int) -> bool:
             return n is not None
 
         self.assertEqual(l1.filter(f1), [1])
 
         # - map(l, f)
-        def f2(n: T) -> Optional[T]:
+        def f2(n: Any) -> Any:
             if n is None:
                 return 'None'
             return n * 2
@@ -240,7 +238,7 @@ class TestImmutableDynArray(unittest.TestCase):
             tmp.append(e)
         self.assertEqual(lst, tmp)
         self.assertEqual(array.to_list(), tmp)
-        i = iter(DynArray())  # type: Iterator[T]
+        i = iter(DynArray())  # type: Iterator[Any]
         self.assertRaises(StopIteration, lambda: next(i))
 
 
