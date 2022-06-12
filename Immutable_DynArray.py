@@ -183,7 +183,7 @@ class DynArray(Generic[T]):
             dy_array._array[i] = f(dy_array._array[i])
         return dy_array
 
-    def reduce(self, f: Callable[..., Any], initial_state: T) -> T:
+    def reduce(self, f: Callable[..., Any], initial_state: int) -> int:
         """ Reduce process elements and build a value by the function """
         state = initial_state
         for i in range(self._size):
