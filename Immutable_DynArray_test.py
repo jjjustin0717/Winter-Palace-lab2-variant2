@@ -135,10 +135,10 @@ class TestImmutableDynArray(unittest.TestCase, Generic[T]):
         self.assertEqual(array4.to_list(), [2, 1, 0])
 
     def test_to_list(self) -> None:
-        array: DynArray[T][T] = DynArray()
-        array1: DynArray[T][T] = array.append(0)
-        array2: DynArray[T][T] = array1.append(1)
-        array3: DynArray[T][T] = array2.append(2)
+        array: DynArray[T] = DynArray()
+        array1: DynArray[T] = array.append(0)
+        array2: DynArray[T] = array1.append(1)
+        array3: DynArray[T] = array2.append(2)
         self.assertEqual(array.to_list(), [])
         self.assertEqual(array1.to_list(), [0])
         self.assertEqual(array2.to_list(), [0, 1])
