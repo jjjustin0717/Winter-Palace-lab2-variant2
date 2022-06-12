@@ -199,9 +199,9 @@ class DynArray(Generic[T]):
                 array_copy._append(lst[i])
         return array_copy
 
-    def empty(self) -> None:
-        """ Empty Dynamic array """
-        return None
+    def empty(self) -> bool:
+        """ Empty Dynamic array return True """
+        return self._size == 0
 
     def __iter__(self) -> 'DynArray[T]':
         """ Iteration """
