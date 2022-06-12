@@ -152,7 +152,7 @@ class TestImmutableDynArray(unittest.TestCase, Generic[T]):
         ]
         for e in test_data:
             array1: DynArray[T] = DynArray()
-            array2: DynArray[T] = array1.from_list(lst=e)  # type: ignore
+            array2: DynArray[T] = array1.from_list(e)
             self.assertEqual(array2.to_list(), e)
 
         test_data = [
@@ -162,7 +162,7 @@ class TestImmutableDynArray(unittest.TestCase, Generic[T]):
         ]
         for e in test_data:
             array3: DynArray[T] = DynArray()
-            array4: DynArray = array3.from_list(lst=e)  # type: ignore
+            array4: DynArray[T] = array3.from_list(e)
             self.assertEqual(array4.to_list(), e)
 
     def test_filter(self) -> None:
