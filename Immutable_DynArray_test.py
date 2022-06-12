@@ -24,10 +24,10 @@ class TestImmutableDynArray(unittest.TestCase, Generic[T]):
 
     def test_api(self) -> None:
         empty: DynArray[T] = DynArray()
-        l1: DynArray[T] = DynArray([None]).concatenate(
-            DynArray([1]).concatenate(empty))
-        l2: DynArray[T] = DynArray([1]).concatenate(
-            DynArray([None]).concatenate(empty))
+        l1: DynArray[T] = DynArray([None]).concatenate(  # type: ignore
+            DynArray([1]).concatenate(empty))  # type: ignore
+        l2: DynArray[T] = DynArray([1]).concatenate(  # type: ignore
+            DynArray([None]).concatenate(empty))  # type: ignore
         # TODO: conj to add elements to the end
         self.assertEqual(str(empty), "[]")
         self.assertEqual(str(l1), "[None, 1]")
