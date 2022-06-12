@@ -13,18 +13,20 @@ import unittest
 
 from hypothesis import given
 import hypothesis.strategies as st
-from typing import List, Any, Iterator
+from typing import List, Any, TypeVar, Generic, Iterator
 
 from Immutable_DynArray import DynArray
 
+T = TypeVar('T')
 
-class TestImmutableDynArray(unittest.TestCase):
+
+class TestImmutableDynArray(unittest.TestCase, Generic[T]):
 
     def test_api(self) -> None:
-        empty: DynArray = DynArray()
-        l1: DynArray = DynArray([None]).concatenate(
+        empty: DynArray[T] = DynArray()
+        l1: DynArray[T] = DynArray([None]).concatenate(
             DynArray([1]).concatenate(empty))
-        l2: DynArray = DynArray([1]).concatenate(
+        l2: DynArray[T] = DynArray([1]).concatenate(
             DynArray([None]).concatenate(empty))
         # TODO: conj to add elements to the end
         self.assertEqual(str(empty), "[]")
@@ -85,58 +87,58 @@ class TestImmutableDynArray(unittest.TestCase):
         self.assertTrue(empty.empty(), True)
 
     def test_size(self) -> None:
-        array: DynArray = DynArray()
-        array1: DynArray = array.append(0)
-        array2: DynArray = array1.append(1)
-        array3: DynArray = array2.append(2)
+        array: DynArray[T] = DynArray()
+        array1: DynArray[T] = array.append(0)
+        array2: DynArray[T] = array1.append(1)
+        array3: DynArray[T] = array2.append(2)
         self.assertEqual(array.size(), 0)
         self.assertEqual(array1.size(), 1)
         self.assertEqual(array2.size(), 2)
         self.assertEqual(array3.size(), 3)
 
     def test_get_item(self) -> None:
-        array: DynArray = DynArray(lst=[0, 1, 2])
+        array: DynArray[T] = DynArray(lst=[0, 1, 2])
         self.assertEqual(array.get_item(0), 0)
         self.assertEqual(array.get_item(1), 1)
         self.assertEqual(array.get_item(2), 2)
 
     def test_set_item(self) -> None:
-        array1: DynArray = DynArray()
-        array2: DynArray = array1.append(0)
-        array3: DynArray = array2.set_item(0, 7)
+        array1: DynArray[T] = DynArray()
+        array2: DynArray[T] = array1.append(0)
+        array3: DynArray[T] = array2.set_item(0, 7)
         self.assertEqual(array2.get_item(0), 0)
         self.assertEqual(array3.get_item(0), 7)
 
     def test_remove(self) -> None:
-        array1: DynArray = DynArray(lst=[0, 1, 2, 3, 4])
-        array2: DynArray = array1.remove(1)
-        array3: DynArray = array2.remove(3)
+        array1: DynArray[T] = DynArray(lst=[0, 1, 2, 3, 4])
+        array2: DynArray[T] = array1.remove(1)
+        array3: DynArray[T] = array2.remove(3)
         self.assertEqual(array1.to_list(), [0, 1, 2, 3, 4])
         self.assertEqual(array2.to_list(), [0, 2, 3, 4])
         self.assertEqual(array3.to_list(), [0, 2, 4])
 
     def test_is_member(self) -> None:
-        array: DynArray = DynArray()
-        array1: DynArray = array.append(0)
-        array2: DynArray = array1.append(1)
-        array3: DynArray = array2.append(2)
+        array: DynArray[T] = DynArray()
+        array1: DynArray[T] = array.append(0)
+        array2: DynArray[T] = array1.append(1)
+        array3: DynArray[T] = array2.append(2)
         self.assertIn(0, array3.to_list())
         self.assertIn(1, array3.to_list())
         self.assertIn(2, array3.to_list())
 
     def test_reverse(self) -> None:
-        array: DynArray = DynArray()
-        array1: DynArray = array.append(0)
-        array2: DynArray = array1.append(1)
-        array3: DynArray = array2.append(2)
-        array4: DynArray = array3.reverse()
+        array: DynArray[T] = DynArray()
+        array1: DynArray[T] = array.append(0)
+        array2: DynArray[T] = array1.append(1)
+        array3: DynArray[T] = array2.append(2)
+        array4: DynArray[T] = array3.reverse()
         self.assertEqual(array4.to_list(), [2, 1, 0])
 
     def test_to_list(self) -> None:
-        array: DynArray = DynArray()
-        array1: DynArray = array.append(0)
-        array2: DynArray = array1.append(1)
-        array3: DynArray = array2.append(2)
+        array: DynArray[T][T] = DynArray()
+        array1: DynArray[T][T] = array.append(0)
+        array2: DynArray[T][T] = array1.append(1)
+        array3: DynArray[T][T] = array2.append(2)
         self.assertEqual(array.to_list(), [])
         self.assertEqual(array1.to_list(), [0])
         self.assertEqual(array2.to_list(), [0, 1])
@@ -149,8 +151,8 @@ class TestImmutableDynArray(unittest.TestCase):
             [0, 1]
         ]
         for e in test_data:
-            array1: DynArray = DynArray()
-            array2: DynArray = array1.from_list(lst=e)  # type: ignore
+            array1: DynArray[T] = DynArray()
+            array2: DynArray[T] = array1.from_list(lst=e)  # type: ignore
             self.assertEqual(array2.to_list(), e)
 
         test_data = [
@@ -159,16 +161,16 @@ class TestImmutableDynArray(unittest.TestCase):
             ['a', 'b']
         ]
         for e in test_data:
-            array3: DynArray = DynArray()
+            array3: DynArray[T] = DynArray()
             array4: DynArray = array3.from_list(lst=e)  # type: ignore
             self.assertEqual(array4.to_list(), e)
 
     def test_filter(self) -> None:
-        def is_even(n: int):
+        def is_even(n: int) -> bool:
             """ Filter function f: callable """
             return n % 2 == 0
 
-        array: DynArray = DynArray(lst=[0, 1, 2, 3, 4])
+        array: DynArray[T] = DynArray(lst=[0, 1, 2, 3, 4])
         self.assertEqual(array.filter(is_even), [0, 2, 4])
 
     def test_map(self) -> None:
@@ -176,63 +178,63 @@ class TestImmutableDynArray(unittest.TestCase):
             """ Map function f: callable """
             return n + 2
 
-        array: DynArray = DynArray(lst=[0, 1, 2, 3, 4])
+        array: DynArray[T] = DynArray(lst=[0, 1, 2, 3, 4])
         self.assertEqual(array.map(increment).to_list(), [2, 3, 4, 5, 6])
 
     def test_reduce(self) -> None:
-        array1: DynArray = DynArray()
+        array1: DynArray[T] = DynArray()
         self.assertEqual(array1.reduce(lambda st, e: st + e, 0), 0)
 
-        array2: DynArray = DynArray()
+        array2: DynArray[T] = DynArray()
         array3 = array2.from_list([1, 2, 3])
         self.assertEqual(array3.reduce(lambda st, e: st + e, 0), 6)
 
     def test_concatenate(self) -> None:
         lst1 = [0, 1, 2]
         lst2 = [3, 4]
-        array1: DynArray = DynArray(lst=lst1)
-        array2: DynArray = DynArray(lst=lst2)
+        array1: DynArray[T] = DynArray(lst=lst1)
+        array2: DynArray[T] = DynArray(lst=lst2)
         array3 = array1.concatenate(array2)
         self.assertEqual(array1.to_list(), [0, 1, 2])
         self.assertEqual(array2.to_list(), [3, 4])
         self.assertEqual(array3.to_list(), [0, 1, 2, 3, 4])
 
     def test_empty(self) -> None:
-        array: DynArray = DynArray()
+        array: DynArray[T] = DynArray()
         self.assertTrue(array.empty(), True)
-        array2: DynArray = array.append(1)
+        array2: DynArray[T] = array.append(1)
         self.assertIsNotNone(array2.to_list(), None)
 
     def test_next(self) -> None:
         lst = [0, 1, 2, 3, 4]
-        array: DynArray = DynArray(lst=lst)
+        array: DynArray[T] = DynArray(lst=lst)
 
         iteration = iter(array)
 
         self.assertIsNotNone(next(iteration))
 
     @given(st.lists(st.integers()))
-    def test_from_list_to_list_equality(self, a) -> None:
-        array: DynArray = DynArray(lst=a)
+    def test_from_list_to_list_equality(self, a: List[Any]) -> None:
+        array: DynArray[T] = DynArray(lst=a)
         b = array.to_list()  # type: List[Any]
         self.assertEqual(a, b)
 
     @given(st.lists(st.integers()))
-    def test_monoid_identity(self, lst) -> None:
-        array1: DynArray = DynArray()
-        array2: DynArray = DynArray(lst=lst)
+    def test_monoid_identity(self, lst: List[Any]) -> None:
+        array1: DynArray[T] = DynArray()
+        array2: DynArray[T] = DynArray(lst=lst)
 
         self.assertEqual(array1.concatenate(array2), array2)
         self.assertEqual(array2.concatenate(array1), array2)
 
     @given(st.lists(st.integers()))
-    def test_python_len_and_list_size_equality(self, a) -> None:
-        array: DynArray = DynArray(lst=a)
+    def test_python_len_and_list_size_equality(self, a: List[Any]) -> None:
+        array: DynArray[T] = DynArray(lst=a)
         self.assertEqual(array.size(), len(a))
 
     def test_iter(self) -> None:
         lst = [1, 2, 3]
-        array: DynArray = DynArray(lst=lst)
+        array: DynArray[T] = DynArray(lst=lst)
         tmp = []  # type: List[Any]
         for e in array:
             tmp.append(e)
