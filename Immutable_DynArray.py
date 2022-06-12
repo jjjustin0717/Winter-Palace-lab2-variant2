@@ -190,7 +190,7 @@ class DynArray(Generic[T]):
             state = f(state, self._array[i])
         return state
 
-    def concatenate(self, array: 'DynArray'[T]) -> 'DynArray[T]':
+    def concatenate(self, array: 'DynArray[T]') -> 'DynArray[T]':
         """ Concatenate the two Dynamic arrays """
         lst = array.to_list()  # type: List[Any]
         array_copy = copy.deepcopy(self)
