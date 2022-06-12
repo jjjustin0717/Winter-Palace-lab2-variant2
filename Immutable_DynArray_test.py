@@ -82,7 +82,7 @@ class TestImmutableDynArray(unittest.TestCase):
         self.assertEqual(empty.reduce(lambda st, e: st + e, 0), 0)
 
         # - empty()
-        self.assertIsNone(empty.empty(), None)
+        self.assertTrue(empty.empty(), True)
 
     def test_size(self) -> None:
         array: DynArray = DynArray()
@@ -199,7 +199,7 @@ class TestImmutableDynArray(unittest.TestCase):
 
     def test_empty(self) -> None:
         array: DynArray = DynArray()
-        self.assertIsNone(array.empty(), None)
+        self.assertTrue(array.empty(), True)
         array2: DynArray = array.append(1)
         self.assertIsNotNone(array2.to_list(), None)
 
