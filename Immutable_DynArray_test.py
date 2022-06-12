@@ -13,7 +13,7 @@ import unittest
 
 from hypothesis import given
 import hypothesis.strategies as st
-from typing import *
+from typing import List, Any, TypeVar, Union
 
 from Immutable_DynArray import DynArray
 
