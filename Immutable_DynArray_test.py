@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# mypy: ignore-errors
 """
     Test immutable version
     Next, look at the fragment of immutable library tests.
