@@ -149,9 +149,9 @@ class TestImmutableDynArray(unittest.TestCase):
             [0, 1]
         ]
         for e in test_data:
-            lst = e
-            array1: DynArray = DynArray(lst=lst)
-            self.assertEqual(array1.to_list(), e)
+            array1: DynArray = DynArray()
+            array2: DynArray = array1.from_list(lst=e)  # type: ignore
+            self.assertEqual(array2.to_list(), e)
 
         test_data = [
             [],
@@ -159,9 +159,9 @@ class TestImmutableDynArray(unittest.TestCase):
             ['a', 'b']
         ]
         for e in test_data:
-            lst = e
-            array2: DynArray = DynArray(lst=lst)
-            self.assertEqual(array2.to_list(), e)
+            array3: DynArray = DynArray()
+            array4: DynArray = array3.from_list(lst=e)  # type: ignore
+            self.assertEqual(array4.to_list(), e)
 
     def test_filter(self) -> None:
         def is_even(n: int):
