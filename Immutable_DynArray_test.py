@@ -23,8 +23,8 @@ T = TypeVar('T')
 class TestImmutableDynArray(unittest.TestCase, Generic[T]):
 
     def test_api(self) -> None:
-        empty: DynArray[T] = DynArray()
-        l1: DynArray[T] = DynArray([None]).concatenate(
+        empty: DynArray[Any] = DynArray()
+        l1: DynArray[Any] = DynArray([None]).concatenate(
             DynArray([1]).concatenate(empty))
         l2: DynArray[Any] = DynArray([1]).concatenate(
             DynArray([None]).concatenate(empty))
@@ -34,7 +34,7 @@ class TestImmutableDynArray(unittest.TestCase, Generic[T]):
         self.assertEqual(str(l2), "[1, None]")
         self.assertNotEqual(l1, l2)
         self.assertEqual(l1, DynArray([None]).concatenate(
-            DynArray([1]).concatenate(empty)))  # type: ignore
+            DynArray([1]).concatenate(empty)))
 
         self.assertEqual(empty.size(), 0)
         self.assertEqual(l1.size(), 2)
