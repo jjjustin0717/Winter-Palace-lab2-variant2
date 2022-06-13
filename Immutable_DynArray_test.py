@@ -24,10 +24,10 @@ class TestImmutableDynArray(unittest.TestCase, Generic[T]):
 
     def test_api(self) -> None:
         empty: DynArray[T] = DynArray()
-        l1: DynArray[T] = DynArray([None]).concatenate(  # type: ignore
-            DynArray([1]).concatenate(empty))  # type: ignore
-        l2: DynArray[T] = DynArray([1]).concatenate(  # type: ignore
-            DynArray([None]).concatenate(empty))  # type: ignore
+        l1: DynArray[T] = DynArray([None]).concatenate(
+            DynArray([1]).concatenate(empty))
+        l2: DynArray[Any] = DynArray([1]).concatenate(
+            DynArray([None]).concatenate(empty))
         # TODO: conj to add elements to the end
         self.assertEqual(str(empty), "[]")
         self.assertEqual(str(l1), "[None, 1]")
@@ -145,14 +145,14 @@ class TestImmutableDynArray(unittest.TestCase, Generic[T]):
         self.assertEqual(array3.to_list(), [0, 1, 2])
 
     def test_from_list(self) -> None:
-        test_data = [
+        test_data: List[List[str]] = [
             [],
             ['a'],
             ['a', 'b']
         ]
         for e in test_data:
             array1: DynArray[T] = DynArray()
-            array2: DynArray[T] = array1.from_list(lst=e)  # type: ignore
+            array2: DynArray[T] = array1.from_list(lst=e)
             self.assertEqual(array2.to_list(), e)
 
     def test_filter(self) -> None:
