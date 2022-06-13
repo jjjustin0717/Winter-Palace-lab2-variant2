@@ -53,7 +53,7 @@ Name: Chen Chongzhong
 Date: 2022/06/13
 
 1.Fix some problems.
-2.Add Type Hints in API test.
+2.Add Type Hints in Immutable test.
 
 ---
 
