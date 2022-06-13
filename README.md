@@ -50,6 +50,16 @@ Group members information as follows.
 The second lab of CPO
 HDU-ID: 212320024
 Name: Chen Chongzhong
+Date: 2022/06/13
+
+1.Fix some problems.
+2.Add Type Hints in API test.
+
+---
+
+The second lab of CPO
+HDU-ID: 212320024
+Name: Chen Chongzhong
 Date: 2022/06/10
 
 1.Fix some problems.
